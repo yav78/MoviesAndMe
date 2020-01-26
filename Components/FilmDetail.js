@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image } from 're
 import { getFilmDetailFromApi, getImageFromApi } from '../API/tmdbapi'
 import moment from 'moment'
 import numeral from 'numeral'
+import {connect} from 'react-redux'
 
 class FilmDetail extends React.Component {
   constructor(props) {
@@ -117,7 +118,14 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilmDetail
+// export FilmDetail
+
+const mapStateToProps = (state) => {
+  return state // si on veut connecter tout les props
+  
+}
+
+export default connect(mapStateToProps)(FilmDetail)
 
 // On peut recuper un param de 2 facons
 //Soit : this.props.navigation.state.params.idFilm
