@@ -121,11 +121,17 @@ const styles = StyleSheet.create({
 // export FilmDetail
 
 const mapStateToProps = (state) => {
-  return state // si on veut connecter tout les props
+  //return state // si on veut connecter tout les props
+  
+  return {
+    favoritesFilm : state.favoritesFilm
+  }
   
 }
 
 export default connect(mapStateToProps)(FilmDetail)
+
+//export default connect(state => state)(FilmDetail) // on aurais pu faire ca
 
 // On peut recuper un param de 2 facons
 //Soit : this.props.navigation.state.params.idFilm
