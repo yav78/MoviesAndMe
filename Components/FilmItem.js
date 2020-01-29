@@ -2,8 +2,20 @@
 
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+// import {connect} from 'react-redux'
 
 class FilmItem extends React.Component {
+  // constructor(props){
+  //   super(props)
+  // }
+
+  isFavorite(){
+    if(this.props.isFilmFavorite){
+      return <Image style={styles.styteFavoriteImage} source={require('../images/ic_favorite.png')} />
+    }
+    
+  }
+
   render() {
     const { film, displayDetailForFilm } = this.props
     return (
@@ -14,6 +26,7 @@ class FilmItem extends React.Component {
         />
         <View style={styles.content_container}>
           <View style={styles.header_container}>
+            {this.isFavorite()}
             <Text style={styles.title_text}>{film.title}</Text>
             <Text style={styles.vote_text}>{film.vote_average}</Text>
           </View>
@@ -29,6 +42,8 @@ class FilmItem extends React.Component {
     )
   }
 }
+
+
 
 const styles = StyleSheet.create({
   main_container: {
@@ -74,7 +89,23 @@ const styles = StyleSheet.create({
   date_text: {
     textAlign: 'right',
     fontSize: 14
+  },
+  styteFavoriteImage:{
+    width:25,
+    height:25,
+    marginRight:5
   }
 })
 
 export default FilmItem
+
+// const mapStateToProps = (state) => {
+//   //return state // si on veut connecter tout les props
+
+//   return {
+//     favoritesFilm: state.favoritesFilm
+//   }
+
+// }
+
+// export default connect(mapStateToProps)(FilmItem)

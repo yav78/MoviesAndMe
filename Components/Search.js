@@ -5,6 +5,7 @@ import { StyleSheet, View, TextInput, Button, Text, FlatList, ActivityIndicator 
 import films from '../Helpers/filmsData'
 import FilmItem from './FilmItem'
 import { getFilms } from '../API/tmdbapi'
+import { connect } from 'react-redux'
 
 class Search extends React.Component {
 
@@ -44,16 +45,16 @@ class Search extends React.Component {
         this.pageCourante = 0
         this.totalPages = 0
         this.setState({
-          films: [],
-        }, () => { 
+            films: [],
+        }, () => {
             //console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de films : " + this.state.films.length)
-            this.loadFilm(this.nomFilm) 
+            this.loadFilm(this.nomFilm)
         })
     }
 
-    displayDetailForFilm = (idFilm)=> {
-        console.log('film id : '+ idFilm)
-        this.props.navigation.navigate("FilmDetail", {idFilm:idFilm})
+    displayDetailForFilm = (idFilm) => {
+        console.log('film id : ' + idFilm)
+        this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
     }
 
     render() {
@@ -65,14 +66,19 @@ class Search extends React.Component {
                 <Button title='Rechercher' onPress={() => { this.searchFilms() }} />
                 <FlatList
                     data={this.state.films}
-                    renderItem={({ item }) => <FilmItem film={item} displayDetailForFilm={this.displayDetailForFilm}/>}
+                    extraData={this.props.favoritesFilm}
+                    // On utilise la prop extraData pour indiquer à notre FlatList que d’autres données doivent être prises en compte si on lui demande de se re-rendre
+                    renderItem={({ item }) => <FilmItem
+                        // Ajout d'une props isFilmFavorite pour indiquer à l'item d'afficher un 🖤 ou non
+                        isFilmFavorite={(this.props.favoritesFilm.findIndex(film => film.id === item.id) !== -1) ? true : false}
+                        film={item} displayDetailForFilm={this.displayDetailForFilm} />}
                     keyExtractor={(item) => String(item.id)}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
-                        if(this.pageCourante<this.totalPage){
+                        if (this.pageCourante < this.totalPage) {
                             this.loadFilm(this.nomFilm)
                         }
-                     }}
+                    }}
                 />
 
                 {this.state.isLoading ?
@@ -111,4 +117,15 @@ const styles = StyleSheet.create({
 })
 
 
-export default Search
+// export default Search
+
+const mapStateToProps = (state) => {
+    //return state // si on veut connecter tout les props
+
+    return {
+        favoritesFilm: state.favoritesFilm
+    }
+
+}
+
+export default connect(mapStateToProps)(Search)
