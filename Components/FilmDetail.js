@@ -46,7 +46,10 @@ class FilmDetail extends React.Component {
 
   _displayFavoriteImage() {
     let sourceImage = require('../images/ic_favorite_border.png')
-    if (this.props.favoritesFilm.findIndex(item => item.idFilm === this.state.film.idFilm) !== -1) {
+    console.log('film : ',this.state.film.id, 'favorite film : ', this.props.favoritesFilm.idFilm)
+    console.log(this.props.favoritesFilm.findIndex(item => item.idFilm === this.state.film.idFilm))
+
+    if (this.props.favoritesFilm.findIndex(item => item.id === this.state.film.id) !== -1) {
       sourceImage = require('../images/ic_favorite.png')
     }
     return (<Image
