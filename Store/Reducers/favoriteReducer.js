@@ -4,7 +4,7 @@ function toogleFovarite(state = initialState, action) {
     let nextState
     switch (action.type) {
         case 'TOOGLE_FAVORITE':
-            const favoriteFilmIndex = state.favoritesFilm.findIndex(item => item.idFilm === action.value.idFilm)
+            const favoriteFilmIndex = state.favoritesFilm.findIndex(item => item.id === action.value.id)
             if (favoriteFilmIndex !== -1) {
                 // Le film est déjà dans les favoris, on le supprime de la liste
                 nextState = {

@@ -5,9 +5,9 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 // import {connect} from 'react-redux'
 
 class FilmItem extends React.Component {
-  // constructor(props){
-  //   super(props)
-  // }
+  constructor(props){
+    super(props)
+  }
 
   isFavorite(){
     if(this.props.isFilmFavorite){
