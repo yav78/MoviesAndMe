@@ -1,44 +1,62 @@
 // Components/FilmItem.js
 
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, Animated, Dimensions } from 'react-native'
 // import {connect} from 'react-redux'
+import FadeIn from '../Animations/FadeIn'
 
 class FilmItem extends React.Component {
-  constructor(props){
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     positionLeft: new Animated.Value(Dimensions.get('window').width)
+  //   }
+  // }
 
-  isFavorite(){
-    if(this.props.isFilmFavorite){
+  // componentDidMount() {
+  //   Animated.spring(
+  //     this.state.positionLeft,
+  //     {
+  //       toValue: 0,
+  //       bounciness: 15
+  //     }
+  //   ).start()
+  // }
+
+  isFavorite() {
+    if (this.props.isFilmFavorite) {
       return <Image style={styles.styteFavoriteImage} source={require('../images/ic_favorite.png')} />
     }
-    
+
   }
 
   render() {
     const { film, displayDetailForFilm } = this.props
     return (
-      <TouchableOpacity style={styles.main_container} onPress={() => displayDetailForFilm(film.id)}>
-        <Image
-          style={styles.image}
-          source={{ uri: "https://image.tmdb.org/t/p/w300" + film.poster_path }}
-        />
-        <View style={styles.content_container}>
-          <View style={styles.header_container}>
-            {this.isFavorite()}
-            <Text style={styles.title_text}>{film.title}</Text>
-            <Text style={styles.vote_text}>{film.vote_average}</Text>
+      
+      <FadeIn>
+        <TouchableOpacity style={styles.main_container} onPress={() => displayDetailForFilm(film.id)}>
+          <Image
+            style={styles.image}
+            source={{ uri: "https://image.tmdb.org/t/p/w300" + film.poster_path }}
+          />
+          <View style={styles.content_container}>
+            <View style={styles.header_container}>
+              {this.isFavorite()}
+              <Text style={styles.title_text}>{film.title}</Text>
+              <Text style={styles.vote_text}>{film.vote_average}</Text>
+            </View>
+            <View style={styles.description_container}>
+              <Text style={styles.description_text} numberOfLines={6}>{film.overview}</Text>
+              {/* La propriété numberOfLines permet de couper un texte si celui-ci est trop long, il suffit de définir un nombre maximum de ligne */}
+            </View>
+            <View style={styles.date_container}>
+              <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
+            </View>
           </View>
-          <View style={styles.description_container}>
-            <Text style={styles.description_text} numberOfLines={6}>{film.overview}</Text>
-            {/* La propriété numberOfLines permet de couper un texte si celui-ci est trop long, il suffit de définir un nombre maximum de ligne */}
-          </View>
-          <View style={styles.date_container}>
-            <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </FadeIn>
+      
     )
   }
 }
@@ -90,10 +108,10 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontSize: 14
   },
-  styteFavoriteImage:{
-    width:25,
-    height:25,
-    marginRight:5
+  styteFavoriteImage: {
+    width: 25,
+    height: 25,
+    marginRight: 5
   }
 })
 

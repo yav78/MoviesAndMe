@@ -142,7 +142,7 @@ class Search extends React.Component {
   }
 
   _loadFilms() {
-      console.log('I am in loadfilm')
+      // console.log('I am in loadfilm')
     if (this.searchedText.length > 0) {
       this.setState({ isLoading: true })
       getFilmsFromApiWithSearchedText(this.searchedText, this.page+1).then(data => {
