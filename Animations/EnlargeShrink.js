@@ -34,7 +34,7 @@ class EnlargeShrink extends React.Component {
 
     render() {
 
-        console.log('should enlarge : ' ,this.props.shouldEnlarge, ' getsize : ' , this._getSize() , ' viewSize : ', this.state.viewSize)
+        //console.log('should enlarge : ' ,this.props.shouldEnlarge, ' getsize : ' , this._getSize() , ' viewSize : ', this.state.viewSize)
 
         return (
             <Animated.View style={{ width: this.state.viewSize, height: this.state.viewSize }}>

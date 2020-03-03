@@ -121,7 +121,7 @@
 // Components/Search.js
 
 import React from 'react'
-import { StyleSheet, View, TextInput, Button, Text, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, TextInput, Button, Text, FlatList, ActivityIndicator , SafeAreaView} from 'react-native'
 import FilmItem from './FilmItem'
 import FilmList from './FilmList'
 import { getFilmsFromApiWithSearchedText } from '../API/tmdbapi'
@@ -182,6 +182,7 @@ class Search extends React.Component {
 
   render() {
     return (
+      // <SafeAreaView style={styles.main_container}>
       <View style={styles.main_container}>
         <TextInput
           style={styles.textinput}
@@ -199,6 +200,7 @@ class Search extends React.Component {
         />
         {this._displayLoading()}
       </View>
+      // </SafeAreaView>
     )
   }
 }

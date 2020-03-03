@@ -117,7 +117,7 @@ class FilmDetail extends React.Component {
       sourceImage = require('../images/ic_favorite.png')
       shouldEnlarge = true
     }
-    console.log('source : ', sourceImage)
+    //console.log('source : ', sourceImage)
     return (
       <EnlargeShrink shouldEnlarge={shouldEnlarge}>
         <Image
