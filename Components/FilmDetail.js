@@ -252,7 +252,7 @@ const mapStateToProps = (state) => {
   //return state // si on veut connecter tout les props
 
   return {
-    favoritesFilm: state.favoritesFilm
+    favoritesFilm: state.toggleFavorite.favoritesFilm
   }
 
 }
