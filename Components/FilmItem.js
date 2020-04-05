@@ -4,24 +4,10 @@ import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity, Animated, Dimensions } from 'react-native'
 // import {connect} from 'react-redux'
 import FadeIn from '../Animations/FadeIn'
+import { connect } from 'react-redux'
 
 class FilmItem extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     positionLeft: new Animated.Value(Dimensions.get('window').width)
-  //   }
-  // }
 
-  // componentDidMount() {
-  //   Animated.spring(
-  //     this.state.positionLeft,
-  //     {
-  //       toValue: 0,
-  //       bounciness: 15
-  //     }
-  //   ).start()
-  // }
 
   isFavorite() {
     if (this.props.isFilmFavorite) {
@@ -30,10 +16,58 @@ class FilmItem extends React.Component {
 
   }
 
+  isWatchedMovieIcon() {
+    //let source = '../images/eye-unchecked.png';
+    if (this.props.isWatchedFilm) {
+      //source = '../images/eye-checked.png';
+      return <Image style={styles.styteFavoriteImage} source={require('../images/eye-checked.png')} />
+    } else {
+      return <Image style={styles.styteFavoriteImage} source={require('../images/eye-unchecked.png')} />
+    }
+
+  }
+
+  isToBeReWatchedMovieIcon() {
+    //let source = '../images/memories-100.png';
+    if (this.props.isToBeReWatchedFilm) {
+      //source = '../images/memories-100-filled.png';
+      return <Image style={styles.styteFavoriteImage} source={require('../images/memories-100-filled.png')} />
+    } else {
+      return <Image style={styles.styteFavoriteImage} source={require('../images/memories-100.png')} />
+    }
+    //return <Image style={styles.styteFavoriteImage} source={require(source)} />
+  }
+
+  isToBeWatchedMovieIcon() {
+    //let source = '../images/tobewatched.png';
+    if (this.props.isToBeWatchedFilm) {
+      //source = '../images/tobewatched-filled.png';
+      return <Image style={styles.styteFavoriteImage} source={require('../images/tobewatched-filled.png')} />
+    } else {
+      return <Image style={styles.styteFavoriteImage} source={require('../images/tobewatched.png')} />
+    }
+    //return <Image style={styles.styteFavoriteImage} source={require(source)} />
+  }
+
+  toggleToBeWatchedMovie() {
+    const action = { type: "TOOGLE_TOBEWATCHED", value: this.props.film }
+    this.props.dispatch(action)
+  }
+
+  toggleToBeReWatchedMovie() {
+    const action = { type: "TOOGLE_TOBEREWATCHED", value: this.props.film }
+    this.props.dispatch(action)
+  }
+
+  toggleWatchedFilm() {
+    const action = { type: "TOOGLE_WATCHED", value: this.props.film }
+    this.props.dispatch(action)
+  }
+
   render() {
     const { film, displayDetailForFilm } = this.props
     return (
-      
+
       <FadeIn>
         <TouchableOpacity style={styles.main_container} onPress={() => displayDetailForFilm(film.id)}>
           <Image
@@ -55,8 +89,19 @@ class FilmItem extends React.Component {
             </View>
           </View>
         </TouchableOpacity>
+        <View style={styles.icons_container}>
+          <TouchableOpacity onPress={() => this.toggleWatchedFilm()}>
+            {this.isWatchedMovieIcon()}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.toggleToBeReWatchedMovie()}>
+            {this.isToBeReWatchedMovieIcon()}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.toggleToBeWatchedMovie()}>
+            {this.isToBeWatchedMovieIcon()}
+          </TouchableOpacity>
+        </View>
       </FadeIn>
-      
+
     )
   }
 }
@@ -87,7 +132,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     flex: 1,
     flexWrap: 'wrap',
-    paddingRight: 5
+    paddingRight: 5,
+    color: 'red',
   },
   vote_text: {
     fontWeight: 'bold',
@@ -112,18 +158,26 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     marginRight: 5
+  },
+  icons_container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: 'space-around'
   }
 })
 
-export default FilmItem
+// export default FilmItem
 
-// const mapStateToProps = (state) => {
-//   //return state // si on veut connecter tout les props
+const mapStateToProps = (state) => {
+  //return state // si on veut connecter tout les props
 
-//   return {
-//     favoritesFilm: state.favoritesFilm
-//   }
+  return {
+    favoritesFilm: state.toggleFavorite.favoritesFilm,
+    toBeReWatchedFilm: state.toBeReWatched.toBeReWatchedFilm,
+    toBeWatchedFilm: state.toBeWatched.toBeWatchedFilm,
+    watchedFilm: state.watched.watchedFilm
+  }
 
-// }
+}
 
-// export default connect(mapStateToProps)(FilmItem)
+export default connect(mapStateToProps)(FilmItem)
